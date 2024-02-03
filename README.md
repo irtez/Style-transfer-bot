@@ -25,7 +25,7 @@ If you want to use this code for your own bot, follow this steps:
 1. `git clone https://github.com/irtez/Style-transfer-bot.git`
 2. Create .env file in bot/app/
 3. Specify TOKEN and OWNER_ID in bot/app/.env. You can create and get bot token with https://t.me/BotFather and check your account Telegram ID with https://t.me/getmyid_bot.
-4. Make sure you have Docker and docker-compose installed and compatible with docker-compose version 3.8 and Docker Engine is running.
+4. Make sure you have Docker and docker-compose installed and compatible with docker-compose version 3.8 and Docker Engine is running (`docker version`, `docker compose version`, `docker run hello-world`).
 5. In terminal change work directory to Style-transfer-bot (`cd Style-transfer-bot`).
 6. `docker compose up -d`
 7. Your bot should be running at https://t.me/<your_bot_name>
