@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  bot:
+    build: ./bot
+    env_file:
+      - path: ./bot/.env
+        required: true
+    depends_on:
+      - "model"
+      - "redis"
+    networks:
+      - shared_network
+
+  model:
+    build: ./model
+    environment:
+      - WORKERS=1
+      - PYTHON_ENV=development
+      - TIMEOUT=300
+    networks:
+      - shared_network
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+  redis:
+    image: "redis:latest"
+    networks:
+      - shared_network
+
+networks:
+  shared_network:
+    driver: bridge

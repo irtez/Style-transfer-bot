@@ -10,7 +10,7 @@ examples_content = {
 examples_style = {
     'Aivazovsky': 'AgACAgIAAxkBAAMUZbO3J_spYhDeBTRd_bfQaFz_8qoAAtHRMRsxwaFJdmCHcp7NYxUBAAMCAAN5AAM0BA',
     'Picasso': 'AgACAgIAAxkBAAMYZbO3SmZjSTC2k_dj6TqwhjXMK3sAAtXRMRsxwaFJeXBSlj3T7nEBAAMCAAN5AAM0BA',
-    'Random bullshit': 'AgACAgIAAxkBAAIDY2Wzxx9MOvEkgIU379umTTuF-oVUAAJb3DEb2NChSZqahhkHgFy7AQADAgADeQADNAQ'
+    'Abstract art': 'AgACAgIAAxkBAAIDY2Wzxx9MOvEkgIU379umTTuF-oVUAAJb3DEb2NChSZqahhkHgFy7AQADAgADeQADNAQ'
 }
 
 content_bytes = [

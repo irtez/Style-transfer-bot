@@ -45,7 +45,7 @@ async def send_request(
     headers = {
         'Accept': '*/*'
     }
-    url = f"{os.environ['REQ_PATH']}:{os.environ['REQ_PORT']}/api/v1/transfer"
+    url = f"http://model:80/api/v1/transfer"
     try:
         async with aiohttp.ClientSession() as session:
             data = aiohttp.FormData()
