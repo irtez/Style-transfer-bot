@@ -3,21 +3,27 @@ version: '3.8'
 services:
   bot:
     build: ./bot
+    restart: unless-stopped
     env_file:
       - path: ./bot/.env
         required: true
     depends_on:
       - "model"
       - "redis"
+    logging:
+      driver: "json-file"
     networks:
       - shared_network
 
   model:
     build: ./model
+    restart: unless-stopped
     environment:
       - WORKERS=1
       - PYTHON_ENV=development
       - TIMEOUT=300
+    logging:
+      driver: "json-file"
     networks:
       - shared_network
     deploy:
@@ -30,6 +36,9 @@ services:
 
   redis:
     image: "redis:latest"
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
     networks:
       - shared_network
 

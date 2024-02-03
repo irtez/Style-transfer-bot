@@ -124,4 +124,8 @@ async def transfer(message: Message, state: FSMContext, bot: Bot):
 
 @router.message()
 async def unknown(message: Message, state: FSMContext, bot: Bot):
+    """
+    If you want bot to react to every message that user sends
+    when it is unexpected, you can use this function.
+    """
     pass

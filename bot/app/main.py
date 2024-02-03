@@ -9,8 +9,6 @@ async def main():
     await dp.start_polling(bot)
 
 if __name__ == '__main__':
-    #from dotenv import load_dotenv
     logging.config.fileConfig('log.ini')
-    #load_dotenv('.env')
     from dispatcher import dp_init
     asyncio.run(main())
