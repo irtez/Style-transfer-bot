@@ -24,6 +24,11 @@ class Transfer(StatesGroup):
 
 
 async def clear_state(state: FSMContext):
+    """
+    Clear state and save number of generations for user.
+    Default state.clear() will delete this variable,
+    while we want to save it.
+    """
     user_data = await state.get_data()
     num = 0
     if 'num_generations' in user_data:
@@ -45,7 +50,7 @@ async def send_request(
     headers = {
         'Accept': '*/*'
     }
-    url = f"{os.environ['REQ_PATH']}:{os.environ['REQ_PORT']}/api/v1/transfer"
+    url = f"http://model:80/api/v1/transfer"
     try:
         async with aiohttp.ClientSession() as session:
             data = aiohttp.FormData()
@@ -232,6 +237,9 @@ async def edit_alpha_message(chat_id: int, message_id: int, state: FSMContext, b
         'also you can choose the model: old or new. '
         'New model transfers style slightly better, but '
         'some object boundaries may be a little blurred.'
+        'NOTE: for now it is strongly recommended to leave '
+        'degree of stylization at 100%, because both models '
+        'generate not-so-good images when different values are used.'
         f'\n\nCurrent settings:\n<b>Content:</b> {alpha}%\n'
         f'<b>Style:</b> {100-alpha}%\n<b>Model:</b> '
         f'{model_name}'

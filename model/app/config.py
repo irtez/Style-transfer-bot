@@ -50,7 +50,7 @@ def get_config() -> dict:
     ENV = ENV or 'development'
 
     # raise error if environment is not expected
-    if ENV not in ENV_CONFIG:
+    if not ENV in ENV_CONFIG.keys():
         raise EnvironmentError(f'Config for envirnoment {ENV} not found')
 
     config = GLOBAL_CONFIG.copy()
@@ -58,7 +58,6 @@ def get_config() -> dict:
 
     config['ENV'] = ENV
     config['DEVICE'] = 'cuda' if torch.cuda.is_available() and config['USE_CUDA_IF_AVAILABLE'] else 'cpu'
-    config['DEVICE'] = torch.device(config['DEVICE'])
 
     return config
 

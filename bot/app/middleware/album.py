@@ -5,6 +5,12 @@ import time
 
 
 class AlbumMiddleware(BaseMiddleware):
+    """
+    Set timeout for handle messages with album attached.
+    Without this middleware bot will react to every image
+    in the album treating every image as a standalone message,
+    which will cause errors and undesired behaviour.
+    """
     def __init__(self) -> None:
         self.user_data = {}
 

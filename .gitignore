@@ -152,4 +152,4 @@ cython_debug/
 #.idea/
 
 **/todo.txt
-bot/results/**
+**/results/**
