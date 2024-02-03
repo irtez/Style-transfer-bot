@@ -1,10 +1,10 @@
-max_file_size = 3.7 * (2**20) # bytes (3.7 MB)
+max_file_size = 8 * (2**20) # bytes (8 MB)
 mime_types = ['image/jpeg', 'image/pjpeg', 'image/png']
 
 examples_content = {
     'Moscow-city': 'AgACAgIAAxkBAAMOZbO27XGq9osnzTAbQ4G5upTy2WUAAuPbMRvY0KFJc_zh9frT32MBAAMCAAN5AAM0BA',
     'River': 'AgACAgIAAxkBAAMSZbO3GD3eMQOeEgp24_8VkmNLIBcAAs_RMRsxwaFJAAEb28wd6oRbAQADAgADeQADNAQ',
-    'Town by the river': 'AgACAgIAAxkBAAIDX2WzxwGSPKVWOKICPfzFtorywA8HAAJa3DEb2NChSQF3A1segFFHAQADAgADeQADNAQ'
+    'Town by a river': 'AgACAgIAAxkBAAIDX2WzxwGSPKVWOKICPfzFtorywA8HAAJa3DEb2NChSQF3A1segFFHAQADAgADeQADNAQ'
 }
 
 examples_style = {
