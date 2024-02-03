@@ -33,6 +33,7 @@ ENV PYTHONPATH=/app
 RUN ls -lah /app/*
 
 COPY ./start.sh /start.sh
+RUN sed -i -e 's/\r$//' /start.sh
 RUN chmod +x /start.sh
 
 EXPOSE 80

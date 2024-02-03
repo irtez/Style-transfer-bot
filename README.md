@@ -27,8 +27,10 @@ If you want to use this code for your own bot, follow this steps:
 3. Specify TOKEN and OWNER_ID in bot/app/.env. You can create and get bot token with https://t.me/BotFather and check your account Telegram ID with https://t.me/getmyid_bot.
 4. Make sure you have Docker and docker-compose installed and compatible with docker-compose version 3.8 and Docker Engine is running.
 5. In terminal change work directory to Style-transfer-bot (`cd Style-transfer-bot`).
-6. `docker-compose up`
+6. `docker-compose up -d`
 7. Your bot should be running at https://t.me/<your_bot_name>
+
+If you want to stop containers without deleting them use `docker-compose stop` and `docker-compose start` to start them. In case you want to delete them use `docker-compose down`.
 
 ### Additional information
 For now, bot uses 2 MicroAST models (https://github.com/EndyWon/MicroAST).
