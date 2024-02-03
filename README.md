@@ -30,7 +30,7 @@ If you want to use this code for your own bot, follow this steps:
 6. `docker-compose up -d`
 7. Your bot should be running at https://t.me/<your_bot_name>
 
-If you want to stop containers without deleting them use `docker-compose stop` and `docker-compose start` to start them. In case you want to delete them use `docker-compose down`.
+If you want to stop containers without deleting them use `docker-compose stop` and `docker-compose start` to start them. In case you want to delete them use `docker-compose down`. You can check running containers with `docker-compose ps` and all containers (inlcuding stopped) with `docker-compose ps -a`.
 
 ### Additional information
 For now, bot uses 2 MicroAST models (https://github.com/EndyWon/MicroAST).
