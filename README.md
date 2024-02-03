@@ -22,7 +22,7 @@ Generated image: ![Generated](<generated examples/example1.jpg>)
 ## Installation
 If you want to use this code for your own bot, follow this steps:
 1. Make sure you have Docker and docker-compose installed and compatible with docker-compose version 3.8 and Docker Engine is running (`docker version`, `docker compose version`, `docker run hello-world`)
-2. Make sure you have GPU with CUDA (version of CPU-only will be available later)
+2. Make sure you have GPU with CUDA (CPU-only version will be available later)
 3. `git clone https://github.com/irtez/Style-transfer-bot.git`
 4. Create .env file in bot/app/
 5. Specify TOKEN and OWNER_ID in bot/app/.env. You can create and get bot token with https://t.me/BotFather and check your account Telegram ID with https://t.me/getmyid_bot
