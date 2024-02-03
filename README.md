@@ -32,6 +32,7 @@ If you want to use this code for your own bot, follow this steps:
 
 ### Additional information
 For now, bot uses 2 MicroAST models (https://github.com/EndyWon/MicroAST).
+
 "old" model uses weights from official repo, "new" was trained with increased style and SSC losses coefficients.
 In model/app/config you can change new_folder to "185k_sigmoid", that weights were obtained by training the model extra 25k iterations with using sigmoid after last decoder layer output. It was a try to make alpha (style degree) work better, as for now when alpha != 1.0 both models output values are far from range [0, 1] and are adjusted in postprocessing, resulting in bad image quality. However, this didn't work (model output were very close to 0 and generated image was very dark, nearly black), but the "185k_sigmoid" weights are ok and you can still try using them with alpha = 1.0 (100%).
  
