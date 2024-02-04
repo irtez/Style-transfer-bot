@@ -90,7 +90,7 @@ async def process_style_photo(message: Message, state: FSMContext, bot: Bot):
 async def style_invalid_message(message: Message, state: FSMContext, bot: Bot):
     await message.answer('Image was not found in your message.')
 
-@router.message((F.photo) & (F.from_user.id == os.environ['OWNER_ID']) & (F.caption == 'u'))
+@router.message((F.photo) & (F.from_user.id == int(os.environ['OWNER_ID'])) & (F.caption == 'u'))
 async def photo_upload(message: Message, state: FSMContext, bot: Bot):
     idx = [[photo.file_id, photo.width, photo.height, photo.file_size] for photo in message.photo]
     text = ""
