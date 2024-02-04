@@ -32,7 +32,7 @@ If you want to use this code for your own bot, follow this steps:
 4. Specify TOKEN and OWNER_ID in bot/.env. You can create and get bot token with https://t.me/BotFather and check your account Telegram ID with https://t.me/getmyid_bot
 5. In terminal change work directory to Style-transfer-bot (`cd Style-transfer-bot`)
 6. `docker compose up -d`
-7. Wait ~10 mins (depending on your internet speed)
+7. Wait ~5 minutes (depending on your internet speed)
 8. Your bot should be running at https://t.me/<your_bot_name>
 
 If you want to stop containers without deleting them use `docker compose stop` and `docker compose start` to start them. In case you want to delete them use `docker compose down`. You can check running containers with `docker compose ps` and all containers (including stopped) with `docker compose ps -a`.
