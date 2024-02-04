@@ -38,7 +38,7 @@ If you want to use this code for your own bot, follow these steps:
 ![upload example](<generated examples/upload_example.png>)
 10. In terminal change work directory to Style-transfer-bot (`cd Style-transfer-bot`)
 11. `docker compose down`
-12. Delete bot image from docker image list with `docker image rm style-transfer-bot-bot-1` or `docker image rm <first 4 symbols of image id>`
+12. Delete bot image from `docker image list` with `docker image rm style-transfer-bot-bot-1` or `docker image rm <first 4 symbols of image id>`
 13. `docker compose up -d`
 14. You can use your bot.
 
