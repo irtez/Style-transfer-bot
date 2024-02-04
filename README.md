@@ -30,10 +30,10 @@ If you want to use this code for your own bot, follow this steps:
 7. `docker compose up -d`
 8. Wait ~10 mins (depending on your internet speed)
 9. Your bot should be running at https://t.me/<your_bot_name>
-10. Send to your bot photos with caption "u" that you want to use as examples. Pick image ID with any size and change bot/app/config.py accordingly. Add your image to bot/app/examples/ and change config.py again.
+10. At this moment /transfer command will not work, because bot/app/config.py is configured with image IDs from original bot.To fix it send to your bot photos with caption "u" that you want to use as examples. Pick image ID with any size and change bot/app/config.py accordingly. Add your image to bot/app/examples/ and change config.py again.
 11. In terminal change work directory to Style-transfer-bot (`cd Style-transfer-bot`)
 11. `docker compose down`
-12. Delete bot image from `docker image list` with `docker image rm <img_name>` or `docker image rm <first 4 symbols of image id>`
+12. Delete bot image  from `docker image list` with `docker image rm style-transfer-bot-bot-1` or `docker image rm <first 4 symbols of image id>`
 13. `docker compose up -d`
 14. You can use your bot.
 
