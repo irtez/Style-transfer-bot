@@ -25,7 +25,7 @@ Style image: ![Abstart art](bot/app/examples/style/hz_che_eto.jpg)
 Generated image: ![Generated](<generated examples/example1.jpg>)
 
 ## Installation
-If you want to use this code for your own bot, follow this steps:
+If you want to use this code for your own bot, follow these steps:
 1. Make sure you have Docker and docker-compose installed and compatible with docker-compose version 3.8 and Docker Engine is running (`docker version`, `docker compose version`, `docker run hello-world`)
 2. `git clone https://github.com/irtez/Style-transfer-bot.git --branch cpu --single-branch` 
 3. Create .env file in bot/
