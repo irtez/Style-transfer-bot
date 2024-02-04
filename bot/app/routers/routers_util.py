@@ -109,7 +109,7 @@ async def generate_image(chat_id: int, state: FSMContext, bot: Bot):
     await state.set_state(Transfer.waiting_for_result)
     await bot.send_message(
         chat_id=chat_id,
-        text='Wait few seconds...'
+        text='Wait a moment...'
     )
     await bot.send_chat_action(chat_id=chat_id, action='upload_document', request_timeout=60)
     user_data = await state.get_data()
@@ -236,7 +236,7 @@ async def edit_alpha_message(chat_id: int, message_id: int, state: FSMContext, b
         'more content-oriented, 0% is style-oriented; '
         'also you can choose the model: old or new. '
         'New model transfers style slightly better, but '
-        'some object boundaries may be a little blurred.'
+        'some object boundaries may be a little blurred.\n'
         'NOTE: for now it is strongly recommended to leave '
         'degree of stylization at 100%, because both models '
         'generate not-so-good images when different values are used.'
