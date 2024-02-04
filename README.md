@@ -21,15 +21,15 @@ Generated image: ![Generated](<generated examples/example1.jpg>)
 
 ## Installation
 If you want to use this code for your own bot, follow this steps:
-
-1. `git clone https://github.com/irtez/Style-transfer-bot.git`
-2. Create .env file in bot/app/
-3. Specify TOKEN and OWNER_ID in bot/app/.env. You can create and get bot token with https://t.me/BotFather and check your account Telegram ID with https://t.me/getmyid_bot
-4. Make sure you have Docker and docker-compose installed and compatible with docker-compose version 3.8 and Docker Engine is running (`docker version`, `docker compose version`, `docker run hello-world`)
-5. In terminal change work directory to Style-transfer-bot (`cd Style-transfer-bot`)
-6. `docker compose up -d`
-7. Wait ~10 mins (depending on your internet speed)
-8. Your bot should be running at https://t.me/<your_bot_name>
+1. Make sure you have Docker and docker-compose installed and compatible with docker-compose version 3.8 and Docker Engine is running (`docker version`, `docker compose version`, `docker run hello-world`)
+2. Make sure you have GPU with CUDA (CPU-only version will be available later)
+3. `git clone https://github.com/irtez/Style-transfer-bot.git`
+4. Create .env file in bot/
+5. Specify TOKEN and OWNER_ID in bot/.env. You can create and get bot token with https://t.me/BotFather and check your account Telegram ID with https://t.me/getmyid_bot
+6. In terminal change work directory to Style-transfer-bot (`cd Style-transfer-bot`)
+7. `docker compose up -d`
+8. Wait ~10 mins (depending on your internet speed)
+9. Your bot should be running at https://t.me/<your_bot_name>
 
 If you want to stop containers without deleting them use `docker compose stop` and `docker compose start` to start them. In case you want to delete them use `docker compose down`. You can check running containers with `docker compose ps` and all containers (including stopped) with `docker compose ps -a`.
 
@@ -37,7 +37,7 @@ If you want to stop containers without deleting them use `docker compose stop` a
 For now, bot uses 2 MicroAST models (https://github.com/EndyWon/MicroAST).
 
 "old" model uses weights from official repo, "new" was trained with increased style and SSC losses coefficients.
-In model/app/config you can change new_folder to "185k_sigmoid", that weights were obtained by training the model extra 25k iterations with using sigmoid after last decoder layer output. It was a try to make alpha (style degree) work better, as for now when alpha != 1.0 both models output values are far from range [0, 1] and are adjusted in postprocessing, resulting in bad image quality. However, this didn't work (model output were very close to 0 and generated image was very dark, nearly black), but the "185k_sigmoid" weights are ok and you can still try using them with alpha = 1.0 (100%).
+In model/app/config you can change new_folder to "185k_sigmoid", that weights were obtained by training the model extra 25k iterations with sigmoid after last decoder layer output. It was an attempt to make alpha (style degree) work better, as for now when alpha != 1.0 both models output values are far from range [0, 1] and are adjusted in postprocessing, resulting in bad image quality. However, this didn't work (model output were very close to 0 and generated image was very dark, nearly black), but the "185k_sigmoid" weights are ok and you can still try using them with alpha = 1.0 (100%).
  
 Containers communicate in shared_network as configured in compose.yaml, so containers' ports are not mapped to host ports. If you want to use them in any external apps, you can do it by mapping `<your_port>:80` in model and `<your_port>:6379` in redis container settings.
 
