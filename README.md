@@ -34,6 +34,13 @@ If you want to use this code for your own bot, follow this steps:
 6. `docker compose up -d`
 7. Wait ~5 minutes (depending on your internet speed)
 8. Your bot should be running at https://t.me/<your_bot_name>
+9. At this moment /transfer command will not work, because bot/app/config.py is configured with image IDs from original bot.To fix it send to your bot photos with caption "u" that you want to use as examples (from Telegram account with ID specified in OWNER_ID in bot/.env). Pick image ID with any size and change bot/app/config.py accordingly. Add your image to bot/app/examples/ and change config.py again.
+![upload example](<generated examples/upload_example.png>)
+10. In terminal change work directory to Style-transfer-bot (`cd Style-transfer-bot`)
+11. `docker compose down`
+12. Delete bot image from docker image list with `docker image rm style-transfer-bot-bot-1` or `docker image rm <first 4 symbols of image id>`
+13. `docker compose up -d`
+14. You can use your bot.
 
 If you want to stop containers without deleting them use `docker compose stop` and `docker compose start` to start them. In case you want to delete them use `docker compose down`. You can check running containers with `docker compose ps` and all containers (including stopped) with `docker compose ps -a`.
 
