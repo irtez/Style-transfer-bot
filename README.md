@@ -4,6 +4,10 @@ The bot is available at: https://t.me/style_transfer_fast_bot
 
 This bot can transfer style from one (style) image to another (content) image.
 
+## This is GPU version
+
+If you want to install and run this bot on CPU see <a href="https://github.com/irtez/Style-transfer-bot/tree/cpu">CPU branch</a>.
+
 ## Usage
 1. Use /transfer.
 2. Send your content image as photo or a document (document size must not be bigger than 8 MB (currently, as it is running on 12 GB GPU)), or you can choose from provided examples.
@@ -22,7 +26,7 @@ Generated image: ![Generated](<generated examples/example1.jpg>)
 ## Installation
 If you want to use this code for your own bot, follow this steps:
 1. Make sure you have Docker and docker-compose installed and compatible with docker-compose version 3.8 and Docker Engine is running (`docker version`, `docker compose version`, `docker run hello-world`)
-2. Make sure you have GPU with CUDA (CPU-only version will be available later)
+2. Make sure you have GPU with CUDA support
 3. `git clone https://github.com/irtez/Style-transfer-bot.git`
 4. Create .env file in bot/
 5. Specify TOKEN and OWNER_ID in bot/.env. You can create and get bot token with https://t.me/BotFather and check your account Telegram ID with https://t.me/getmyid_bot
@@ -30,7 +34,8 @@ If you want to use this code for your own bot, follow this steps:
 7. `docker compose up -d`
 8. Wait ~10 mins (depending on your internet speed)
 9. Your bot should be running at https://t.me/<your_bot_name>
-10. At this moment /transfer command will not work, because bot/app/config.py is configured with image IDs from original bot.To fix it send to your bot photos with caption "u" that you want to use as examples. Pick image ID with any size and change bot/app/config.py accordingly. Add your image to bot/app/examples/ and change config.py again.
+10. At this moment /transfer command will not work, because bot/app/config.py is configured with image IDs from original bot. To fix it send to your bot photos with caption "u" that you want to use as examples (from Telegram account with ID specified in OWNER_ID in bot/.env). Pick image ID with any size you want and change bot/app/config.py accordingly. Add your image to bot/app/examples/ and change config.py again.
+![upload example](<generated examples/upload_example.png>)
 11. In terminal change work directory to Style-transfer-bot (`cd Style-transfer-bot`)
 11. `docker compose down`
 12. Delete bot image  from `docker image list` with `docker image rm style-transfer-bot-bot-1` or `docker image rm <first 4 symbols of image id>`
