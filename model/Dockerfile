@@ -1,11 +1,11 @@
 FROM python:3.9.10
 
 # Install torch
-RUN pip3 --timeout=300 --no-cache-dir install torch torchvision
+RUN pip3 --no-cache-dir install torch torchvision
 
 # Install other packages
 COPY ./requirements.txt .
-RUN pip3 --timeout=300 --no-cache-dir install -r requirements.txt
+RUN pip3 --no-cache-dir install -r requirements.txt
 
 # Copy model files
 COPY ./models /models
