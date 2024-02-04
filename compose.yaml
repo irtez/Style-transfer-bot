@@ -26,13 +26,6 @@ services:
       driver: "json-file"
     networks:
       - shared_network
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: 1
-              capabilities: [gpu]
 
   redis:
     image: "redis:latest"
