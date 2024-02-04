@@ -43,4 +43,4 @@ Containers communicate in shared_network as configured in compose.yaml, so conta
 
 With release of https://github.com/Sooyyoungg/AesFA code I will try to replace "new" model with this architecture.
 
-Also if you are planning to launch model with GPU with less video memory, you can change it `bot/app/config.py`. On my Nvidia GeForce GTX 1650 4GB GPU max size was about 7.4 MB for both images combined, so it was 3.7 MB limitation for each. Using images with bigger size will result in OOM error. 
+Also if you are planning to launch model using GPU with less video memory, you can change it `bot/app/config.py`. On my Nvidia GeForce GTX 1650 4GB GPU max size was about 7.4 MB for both images combined, so it was 3.7 MB limitation for each. Using images with bigger size will result in OOM error. 
