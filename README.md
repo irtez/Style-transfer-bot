@@ -11,7 +11,7 @@ Currently computing on CPU takes about 10-15 sec (to be upgraded in the future),
 
 ## Usage
 1. Use /transfer.
-2. Send your content image as photo or a document (document size must not be bigger than 8 MB (currently, as it is running on 12 GB GPU)), or you can choose from provided examples.
+2. Send your content image as photo or a document (document size must not be bigger than 20 MB (currently, as it is running on 12 GB GPU)), or you can choose from provided examples.
 3. Send style image or choose on of the examples the same way as content image.
 4. You can choose the degree of stylization and the model. Bot will provide you more detailed info on this settings.
 5. Click 'Generate!'.
