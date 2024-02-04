@@ -1,4 +1,4 @@
-max_file_size = 8 * (2**20) # bytes (8 MB)
+max_file_size = 20 * (2**20) # bytes (20 MB)
 mime_types = ['image/jpeg', 'image/pjpeg', 'image/png']
 
 examples_content = {
