@@ -2,7 +2,7 @@
  
 The bot is available at: https://t.me/style_transfer_fast_bot
 
-**Online status:** offline 
+**Online status:** offline 🟥
 
 This bot can transfer style from one (style) image to another (content) image.
 
