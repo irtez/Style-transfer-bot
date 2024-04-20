@@ -1,4 +1,6 @@
 # Style transfer bot
+
+Бот был задеплоен и проверен, @irtez6479 в тг
  
 The bot is available at: https://t.me/style_transfer_fast_bot
 
