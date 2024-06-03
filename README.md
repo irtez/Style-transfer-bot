@@ -1,6 +1,11 @@
 # Style transfer bot
+
+Бот был задеплоен и проверен, @irtez6479 в тг
+Ноутбук с обучением: https://www.kaggle.com/code/irtez00/style-transfer/notebook
  
 The bot is available at: https://t.me/style_transfer_fast_bot
+
+**Online status:** offline 🟥
 
 This bot can transfer style from one (style) image to another (content) image.
 
