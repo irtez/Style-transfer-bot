@@ -40,7 +40,8 @@ async def call_generate(call: CallbackQuery, state: FSMContext, bot: Bot):
         await generate_image(
             chat_id=call.message.chat.id,
             state=state,
-            bot=bot
+            bot=bot,
+            call=call
         )
     else:
         try:

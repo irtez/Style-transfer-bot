@@ -12,6 +12,7 @@ from aiogram.fsm.state import State, StatesGroup
 from PIL import Image, UnidentifiedImageError
 import config as cfg
 from typing import Optional, Tuple
+from aiogram.types.callback_query import CallbackQuery
 import re
 from keyboards import *
 
@@ -137,7 +138,7 @@ async def check_size(text: str) -> Tuple[str, bool]:
     return """Wrong input. Type one integer for both width and height to be the same size \
 or intxint for width and height respectively.""", False
 
-async def generate_image(chat_id: int, state: FSMContext, bot: Bot):
+async def generate_image(chat_id: int, state: FSMContext, bot: Bot, call: CallbackQuery):
     await state.set_state(Transfer.waiting_for_result)
     await bot.send_message(
         chat_id=chat_id,
@@ -170,9 +171,18 @@ async def generate_image(chat_id: int, state: FSMContext, bot: Bot):
         content_size=content_size,
         style_size=style_size
     )
+    folder = f'outputs/{chat_id}'
     if status == 200:
         if not 'num_generations' in user_data.keys():
+            os.makedirs(folder, exist_ok=True)
+            with open(f"{folder}/info_{chat_id}.txt", "w") as f:
+                data = call.from_user
+                text = f"First name: {data.first_name or '-'}\n"
+                text += f"Last name: {data.last_name or '-'}\n"
+                text += f"Username: {'@' if data.username else ''}{data.username or '-'}"
+                f.write(text)
             num = 1
+
         else:
             num = user_data['num_generations'] + 1
         
@@ -180,9 +190,9 @@ async def generate_image(chat_id: int, state: FSMContext, bot: Bot):
 
         result_img = Image.open(buff)
         
-        os.makedirs(f'outputs/{chat_id}', exist_ok=True)
+        os.makedirs(folder, exist_ok=True)
         filename = f'{chat_id}-{num}.jpg'
-        path = f'outputs/{chat_id}/{filename}'
+        path = f'{folder}/{filename}'
 
         result_img.save(path, format='JPEG', quality=95)
 
