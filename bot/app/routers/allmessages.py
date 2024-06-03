@@ -99,6 +99,44 @@ async def photo_upload(message: Message, state: FSMContext, bot: Bot):
         text += f"{w}x{h}:\nID: {file_id}\nSize: {size / 2**20:.4f} MB\n\n"
     await message.answer(text)
 
+@router.message(Transfer.choosing_content_size, F.text)
+async def chose_sizes(message: Message, state: FSMContext, bot: Bot):
+    result, status = await check_size(message.text)
+    if status:
+        await state.update_data(content_size=result)
+        await message.answer(f"New content size chosen: {result}.")
+        await state.set_state(Transfer.choosing_model_sizes)
+        await edit_final_message(
+            chat_id=message.chat.id,
+            message_id=message.message_id,
+            state=state,
+            bot=bot
+        )
+    else:
+        await message.answer(result)
+@router.message(Transfer.choosing_content_size)
+async def content_size_invalid_message(message: Message, state: FSMContext, bot: Bot):
+    await message.answer('No text found in message.')
+
+@router.message(Transfer.choosing_style_size, F.text)
+async def choose_content_size(message: Message, state: FSMContext, bot: Bot):
+    result, status = await check_size(message.text)
+    if status:
+        await state.update_data(style_size=result)
+        await message.answer(f"New style size chosen: {result}.")
+        await state.set_state(Transfer.choosing_model_sizes)
+        await edit_final_message(
+            chat_id=message.chat.id,
+            message_id=message.message_id,
+            state=state,
+            bot=bot
+        )
+    else:
+        await message.answer(result)
+@router.message(Transfer.choosing_style_size)
+async def content_size_invalid_message(message: Message, state: FSMContext, bot: Bot):
+    await message.answer('No text found in message.')
+
 @router.message(Command('start'))
 async def start(message: Message, state: FSMContext, bot: Bot):
     logging.info(f'{message.chat.id} start')

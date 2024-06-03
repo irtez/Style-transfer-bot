@@ -1,6 +1,8 @@
 max_file_size = 20 * (2**20) # bytes (20 MB)
 mime_types = ['image/jpeg', 'image/pjpeg', 'image/png']
 
+model_host = "model:80" # "localhost:5000"
+
 examples_content = {
     'Moscow-city': 'AgACAgIAAxkBAAMOZbO27XGq9osnzTAbQ4G5upTy2WUAAuPbMRvY0KFJc_zh9frT32MBAAMCAAN5AAM0BA',
     'River': 'AgACAgIAAxkBAAMSZbO3GD3eMQOeEgp24_8VkmNLIBcAAs_RMRsxwaFJAAEb28wd6oRbAQADAgADeQADNAQ',

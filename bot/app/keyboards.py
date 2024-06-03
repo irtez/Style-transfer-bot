@@ -14,18 +14,22 @@ def example_markup(examples: dict, mode: str):
     builder.row(InlineKeyboardButton(text='Cancel', callback_data='cancel'))
     return builder.as_markup()
 
-def alpha_markup():
+def generate_markup():
     builder = InlineKeyboardBuilder()
-    for i in range(5):
-        alpha = i * 25
-        builder.add(
-            InlineKeyboardButton(
-                text=str(alpha),
-                callback_data=f"{alpha} alpha"
-            )
-        )
-    builder.row(InlineKeyboardButton(text='Old', callback_data='old model'))
-    builder.add(InlineKeyboardButton(text='New', callback_data='new model'))
+    builder.row(
+        *[InlineKeyboardButton(
+            text=str(i),
+            callback_data=f"{i} content size"
+        ) for i in [256, 512, 1024, 'orig', 'custom']]
+    )
+    builder.row(
+        *[InlineKeyboardButton(
+            text=str(i),
+            callback_data=f"{i} style size"
+        ) for i in [256, 512, 1024, 'orig', 'custom']]
+    )
+    builder.row(InlineKeyboardButton(text='MicroAST', callback_data='MicroAST model'))
+    builder.add(InlineKeyboardButton(text='AesFA', callback_data='AesFA model'))
     builder.row(InlineKeyboardButton(text='Generate!', callback_data='generate!'))
     builder.row(InlineKeyboardButton(text='Cancel', callback_data='cancel'))
     return builder.as_markup()

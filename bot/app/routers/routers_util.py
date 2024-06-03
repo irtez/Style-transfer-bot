@@ -11,6 +11,8 @@ from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
 from PIL import Image, UnidentifiedImageError
 import config as cfg
+from typing import Optional, Tuple
+import re
 from keyboards import *
 
 class Transfer(StatesGroup):
@@ -18,7 +20,9 @@ class Transfer(StatesGroup):
     uploading_content = State()
     choosing_style = State()
     uploading_style = State()
-    choosing_alpha = State()
+    choosing_model_sizes = State()
+    choosing_content_size = State()
+    choosing_style_size = State()
     waiting_for_result = State()
     checking_document = State()
 
@@ -40,27 +44,33 @@ async def send_request(
         content: bytes,
         style: bytes,
         media_type: str = "image/jpeg",
-        alpha: float = 1.0,
-        model_name: str = "old"
+        model_name: str = "microAST",
+        content_size: Optional[str] = None,
+        style_size: Optional[str] = None
 ):
     params = {
-        'alpha': alpha,
-        'model_name': model_name
+        'model_name': model_name,
     }
+    if content_size:
+        params['content_size'] = content_size
+    if style_size:
+        params['style_size'] = style_size
     headers = {
         'Accept': '*/*'
     }
-    url = f"http://model:80/api/v1/transfer"
+    url = f"http://{cfg.model_host}/api/v1/transfer"
     try:
         async with aiohttp.ClientSession() as session:
             data = aiohttp.FormData()
-            data.add_field('contentFile', content, content_type=media_type)
-            data.add_field('styleFile', style, content_type=media_type)
+            data.add_field('content_file', content, content_type=media_type)
+            data.add_field('style_file', style, content_type=media_type)
             image_bytes = None
             response = await session.post(url, params=params, data=data, headers=headers)
             if response.status == 200:
                 image_bytes = await response.content.read()
-            return response.status, image_bytes
+                return response.status, image_bytes
+            else:
+                return response.status, await response.text()
     except:
         logging.error(traceback.format_exc())
         return 500, None
@@ -104,6 +114,28 @@ async def check_document(message: Message, bot: Bot):
             return "Document is corrupted or not supported."
     return None
 
+async def check_size(text: str) -> Tuple[str, bool]:
+    pattern = r"\d{2,4}x\d{2,4}"
+    if text.isdigit():
+        try:
+            size = int(text)
+        except:
+            return "Error converting size to int.", False
+        if size < 64 or size > 4096:
+            return "Size cannot be lower then 64 or higher then 4096.", False
+        return f"{size}x{size}", True
+    elif re.fullmatch(pattern, text):
+        try:
+            w, h = list(map(int, text.split('x')))
+        except:
+            return "Error converting size to int.", False
+        if w < 64 or w > 4096:
+            return "Width cannot be lower then 64 or higher then 4096.", False
+        if h < 64 or h > 4096:
+            return "Height cannot be lower then 64 or higher then 4096.", False
+        return f"{w}x{h}", True
+    return """Wrong input. Type one integer for both width and height to be the same size \
+or intxint for width and height respectively.""", False
 
 async def generate_image(chat_id: int, state: FSMContext, bot: Bot):
     await state.set_state(Transfer.waiting_for_result)
@@ -113,8 +145,6 @@ async def generate_image(chat_id: int, state: FSMContext, bot: Bot):
     )
     await bot.send_chat_action(chat_id=chat_id, action='upload_document', request_timeout=60)
     user_data = await state.get_data()
-    alpha = user_data['alpha']
-    model_name = user_data['model_name']
     content_data = user_data['content_photo']
     style_data = user_data['style_photo']
     if 'example' in content_data:
@@ -129,12 +159,16 @@ async def generate_image(chat_id: int, state: FSMContext, bot: Bot):
     else:
         style_io = await bot.download(style_data) # io.BytesIO
         style = style_io.getvalue()
-        
+    
+    content_size = None if user_data['content_size'] == 'orig' else user_data['content_size']
+    style_size = None if user_data['style_size'] == 'orig' else user_data['style_size']
+
     status, img_bytes = await send_request(
         content=content,
         style=style,
-        alpha=alpha,
-        model_name=model_name
+        model_name=user_data['model_name'],
+        content_size=content_size,
+        style_size=style_size
     )
     if status == 200:
         if not 'num_generations' in user_data.keys():
@@ -173,7 +207,7 @@ async def generate_image(chat_id: int, state: FSMContext, bot: Bot):
             text=f"Errro code: {status}.\nFor new generation use /transfer."
         )
         await clear_state(state)
-        logging.error(f"{chat_id} transfer error")
+        logging.error(f"{chat_id} transfer error\n {img_bytes}")
 
 async def edit_example_message(chat_id: int, state: FSMContext, bot: Bot, mode: list[str], example: set = None):
     user_data = await state.get_data()
@@ -216,48 +250,51 @@ async def content_chosen(chat_id: int, state: FSMContext, bot: Bot):
     await state.update_data(style_photos=[msg_photo.message_id for msg_photo in msgs_photo])
 
 async def style_chosen(chat_id: int, state: FSMContext, bot: Bot):
-    await state.set_state(Transfer.choosing_alpha)
-    alpha = 100
-    model_name = "old"
-    await state.update_data(alpha=alpha/100, model_name=model_name)
-    await edit_alpha_message(
+    await state.set_state(Transfer.choosing_model_sizes)
+    await state.update_data(
+        content_size="orig",
+        style_size="orig",
+        model_name="MicroAST"
+    )
+    await edit_final_message(
         chat_id=chat_id,
         message_id=None,
         state=state,
         bot=bot
     )
 
-async def edit_alpha_message(chat_id: int, message_id: int, state: FSMContext, bot: Bot):
+async def edit_final_message(chat_id: int, message_id: int, state: FSMContext, bot: Bot):
     user_data = await state.get_data()
-    alpha = int(user_data['alpha'] * 100)
-    model_name = user_data['model_name']
-    text = (
-        'Choose the degree of stylization, where 100% is '
-        'more content-oriented, 0% is style-oriented; '
-        'also you can choose the model: old or new. '
-        'New model transfers style slightly better, but '
-        'some object boundaries may be a little blurred.\n'
-        'NOTE: for now it is strongly recommended to leave '
-        'degree of stylization at 100% content, because the images '
-        'both models generate when other values are used are '
-        'a little strange.'
-        f'\n\nCurrent settings:\n<b>Content:</b> {alpha}%\n'
-        f'<b>Style:</b> {100-alpha}%\n<b>Model:</b> '
-        f'{model_name}'
-    )
+    text = f"""Choose resulting image size, style size and model.
+<b>Image size:</b> you can experiment with different \
+image sizes, which affects stylization of the image. \
+You can choose one of listed below (e.g. 256x256), as well \
+as keeping original size or choosing custom size.
+<b>Style size:</b> it affects degree of stylization and transfer of \
+spatial information. Small size results in better stylized images, \
+while big size just transfers color from the style image. \
+You can choose this size the same way as choosing image size.
+<b>Model</b>: MicroAST or AesFA. AesFA transfers spatial information \
+better, while MicroAST is better at preserving content image features.
+
+Current settings:
+<b>Image size:</b> {user_data['content_size']}\n\
+<b>Style size:</b> {user_data['style_size']}\n\
+<b>Model:</b> {user_data['model_name']}"""
+
     try:
         if message_id:
             await bot.edit_message_text(
                 text=text,
                 chat_id=chat_id,
                 message_id=message_id,
-                reply_markup=alpha_markup()
+                reply_markup=generate_markup()
             )
         else:
             await bot.send_message(
                 chat_id=chat_id,
                 text=text,
-                reply_markup=alpha_markup()
+                reply_markup=generate_markup()
             )
     except:
         pass

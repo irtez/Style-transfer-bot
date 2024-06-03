@@ -1,23 +1,18 @@
 import os
 import torch
 
-old_folder = "old"
-new_folder = "new" #"185k_sigmoid"
+new_folder = "new"
 
 # Config that serves all environment
 GLOBAL_CONFIG = {
-    "OLD": {
-        "CE": f"../models/{old_folder}/content_encoder.pth.tar",
-        "SE": f"../models/{old_folder}/style_encoder.pth.tar",
-        "DEC": f"../models/{old_folder}/decoder.pth.tar",
-        "MOD": f"../models/{old_folder}/modulator.pth.tar"
+    "MicroAST": {
+        "CE": "../models/microAST/content_encoder.pth.tar",
+        "SE": "../models/microAST/style_encoder.pth.tar",
+        "DEC": "../models/microAST/decoder.pth.tar",
+        "MOD": "../models/microAST/modulator.pth.tar"
     },
-    "NEW": {
-        "CE": f"../models/{new_folder}/content_encoder.pth.tar",
-        "SE": f"../models/{new_folder}/style_encoder.pth.tar",
-        "DEC": f"../models/{new_folder}/decoder.pth.tar",
-        "MOD": f"../models/{new_folder}/modulator.pth.tar"
-    },
+    "AesFA": "../models/AesFA/main.pth",
+    "AesFA_pad": 60,
     "USE_CUDA_IF_AVAILABLE": True,
     "ROUND_DIGIT": 6
 }

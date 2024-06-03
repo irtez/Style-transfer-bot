@@ -4,6 +4,10 @@ services:
   bot:
     build: ./bot
     restart: unless-stopped
+    volumes:
+      - type: bind
+        source: ./all_logs
+        target: /app/all_logs
     env_file:
       - path: ./bot/.env
         required: true
@@ -20,10 +24,14 @@ services:
     restart: unless-stopped
     environment:
       - WORKERS=1
-      - PYTHON_ENV=development
+      - PYTHON_ENV=production
       - TIMEOUT=300
     logging:
       driver: "json-file"
+    volumes:
+      - type: bind
+        source: ./all_logs
+        target: /app/all_logs
     networks:
       - shared_network
     deploy:
