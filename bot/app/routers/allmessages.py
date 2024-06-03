@@ -108,7 +108,7 @@ async def choose_content_size(message: Message, state: FSMContext, bot: Bot):
         await state.set_state(Transfer.choosing_model_sizes)
         await edit_final_message(
             chat_id=message.chat.id,
-            message_id=message.message_id,
+            #message_id=message.message_id,
             state=state,
             bot=bot
         )

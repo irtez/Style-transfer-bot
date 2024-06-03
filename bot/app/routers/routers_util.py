@@ -269,7 +269,7 @@ async def style_chosen(chat_id: int, state: FSMContext, bot: Bot):
     )
     await edit_final_message(
         chat_id=chat_id,
-        message_id=None,
+        #message_id=None,
         state=state,
         bot=bot
     )
