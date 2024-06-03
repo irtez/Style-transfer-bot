@@ -215,7 +215,7 @@ async def generate_image(chat_id: int, state: FSMContext, bot: Bot, call: Callba
     else:
         await bot.send_message(
             chat_id=chat_id,
-            text=f"Errro code: {status}.\nFor new generation use /transfer."
+            text=f"Error code: {status}.\nFor new generation use /transfer."
         )
         await clear_state(state)
         logging.error(f"{chat_id} transfer error\n {img_bytes}")
@@ -274,7 +274,7 @@ async def style_chosen(chat_id: int, state: FSMContext, bot: Bot):
         bot=bot
     )
 
-async def edit_final_message(chat_id: int, message_id: int, state: FSMContext, bot: Bot):
+async def edit_final_message(chat_id: int, state: FSMContext, bot: Bot):
     user_data = await state.get_data()
     text = f"""Choose resulting image size, style size and model.
 <b>Image size:</b> you can experiment with different \
@@ -294,18 +294,19 @@ Current settings:
 <b>Model:</b> {user_data['model_name']}"""
 
     try:
-        if message_id:
+        if 'generate_msg_id' in user_data:
             await bot.edit_message_text(
                 text=text,
                 chat_id=chat_id,
-                message_id=message_id,
+                message_id=user_data['generate_msg_id'],
                 reply_markup=generate_markup()
             )
         else:
-            await bot.send_message(
+            msg = await bot.send_message(
                 chat_id=chat_id,
                 text=text,
                 reply_markup=generate_markup()
             )
+            await state.update_data(generate_msg_id=msg.message_id)
     except:
         pass

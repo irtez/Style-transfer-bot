@@ -81,7 +81,7 @@ or <i>intxint</i> (<i>widthxheight</i>) for exact size \
             await state.update_data(model_name=call.data.split()[0])
         await edit_final_message(
             chat_id=call.message.chat.id,
-            message_id=call.message.message_id,
+            #message_id=call.message.message_id,
             state=state,
             bot=bot
         )
