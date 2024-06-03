@@ -180,8 +180,9 @@ async def generate_image(chat_id: int, state: FSMContext, bot: Bot):
 
         result_img = Image.open(buff)
         
+        os.makedirs(f'outputs/{chat_id}', exist_ok=True)
         filename = f'{chat_id}-{num}.jpg'
-        path = f'results/{filename}'
+        path = f'results/{chat_id}/{filename}'
 
         result_img.save(path, format='JPEG', quality=95)
 

@@ -8,6 +8,9 @@ services:
       - type: bind
         source: ./all_logs
         target: /app/all_logs
+      - type: bind
+        source: ./results
+        target: /app/results
     env_file:
       - path: ./bot/.env
         required: true
